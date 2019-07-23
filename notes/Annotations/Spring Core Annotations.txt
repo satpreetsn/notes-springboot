@@ -1,0 +1,56 @@
+--------------------------------------------------------------------
+## DI-Related Annotations
+
+1- @Autowired :
+
+* mark a dependency which Spring is going to resolve and inject.
+* can use this annotation with a constructor, setter, or field injection.
+
+
+2- @Bean
+
+* marks a factory method which instantiates a Spring Bean.
+* The resulting bean has the same name as the factory method. If we want to name it differently, we can do so with the 'name' or the 'value' arguements of this annotation.
+* all the methods annotated with @Bean must be in @Configuration classes.
+
+3- @Qualifier 
+
+* We use @Qualifier along with @Autowired to provide the bean id or bean name we want to use in ambiguous situations.
+
+4- @Required
+
+* @Required on setter methods to mark dependencies that we want to populate through XML.Otherwise, BeanInitializationException will be thrown.
+
+5- @Value
+
+* for injecting property values into beans.
+* Compatible with constructor.setter,and field injection.
+
+6- @DependsOn
+
+* To make spring intialize other beans before the annotated one.
+* We only need this annotation when the dependencies are implicit. 
+
+7- @Lazy 
+
+* When we want to initialize bean lazily.
+* By default, Spring creates all singleton beans eagerly at the startup/bootstraping of the application context. That is, when we need to create bean when we request it, not at application startup.
+* This annotation behaves differently depending on where we exactly place it. We can put it on :
+	- @Bean annotated bean factory method to delay the method call.(hence bean creation)
+	- @Configuration class and all contained @Bean methods will be affected.
+	- @Component class, which is not @Configuration class,this bean will be intialized lazily.
+	- @Autowired constructor,setter or field, to load the dependency itself lazily(via proxy).
+
+* This annotation has an agrument named 'value' with default value of 'true'. It is useful to override the default behavior.
+
+8- @Lookup
+
+* A method annotated with @Lookup tells spring to return an instance of the method's return type when we invoke it.
+
+9- @Primary 
+
+* if we mark the most frequently used bean with @Primary, it will be chosen on unqualified injection points.
+
+10- @Scope
+
+* To define the scope of a @Component class or a @Bean definiton. It can be either singleton, prototype, request,session,globalSession or some custom scope.
